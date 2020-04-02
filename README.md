@@ -15,3 +15,11 @@ The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to 
 1. run `npm install`
 2. create `.env` file and set the values. You can use the `.env.example`.
 3. run `npm start`
+
+## TODO
+
+- [ ] remove duplicated before check on db
+- [ ] Handle errors when page take more than 10s to load
+- [ ] Query youtube API to get videos data
+- [ ] Handle crawl results
+- [x] write results to file
