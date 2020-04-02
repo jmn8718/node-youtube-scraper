@@ -96,17 +96,23 @@ const crawlChannels = async function(channels = [], concurrency = 2) {
   return map(
     channels,
     async ({ _id, channelId }) => {
-      const { videoIds, error, errorMessage } = await crawl(channelId);
-      if (error) {
-        console.log(`error for channel ${channelId} => ${errorMessage}`);
-      } else {
-        saveToDisc(channelId, videoIds);
+      const videos = [];
+      try {
+        const { videoIds, error, errorMessage } = await crawl(channelId);
+        if (error) {
+          console.log(`error for channel ${channelId} => ${errorMessage}`);
+        } else {
+          saveToDisc(channelId, videoIds);
+          videos.push(...videoIds);
+        }
+        const youtubeVideosData = await getVideosData(videoIds);
+        await map(youtubeVideosData, publishVideo, {
+          concurrency: 4
+        });
+      } catch (err) {
+        console.error(err);
       }
-      const youtubeVideosData = await getVideosData(videoIds);
-      await map(youtubeVideosData, publishVideo, {
-        concurrency: 4
-      });
-      return { _id, channelId, videoIds };
+      return { _id, channelId, videos };
     },
     { concurrency }
   );
