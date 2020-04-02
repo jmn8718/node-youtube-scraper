@@ -1,0 +1,16 @@
+{
+  "name": "node-youtube-scrapper",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["node", "youtube","scrapper"],
+  "author": "Jose Miguel Navarro <jmn8718@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "lodash.uniq": "^4.5.0",
+    "puppeteer": "^2.1.1"
+  }
+}
