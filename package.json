@@ -1,7 +1,7 @@
 {
-  "name": "node-youtube-scrapper",
+  "name": "node-youtube-scraper",
   "version": "0.1.0",
-  "description": "",
+  "description": "The goal of this project is to scrap youtube channel's page to get the latest video ids of a channel.",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js"
@@ -30,5 +30,14 @@
     "moment": "^2.24.0",
     "mongodb": "^3.5.5",
     "puppeteer": "^2.1.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmn8718/node-youtube-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jmn8718/node-youtube-scraper/issues"
+  },
+  "homepage": "https://github.com/jmn8718/node-youtube-scraper#readme"
 }
