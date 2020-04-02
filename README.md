@@ -8,6 +8,11 @@ The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to 
 
 - nodejs
 - mongodb
+- youtube API key
+
+## Youtube API setup
+
+In order to query youtube API, you need to get an API Key to call the api. You can follow the [documentation](https://developers.google.com/youtube/v3/getting-started) to configure your google account to use Youtube API
 
 ## Usage
 
@@ -20,6 +25,7 @@ The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to 
 
 - [x] remove duplicated before check on db
 - [x] Handle errors when page take more than 10s to load
-- [ ] Query youtube API to get videos data
+- [X] Query youtube API to get videos data
+- [ ] Handle youtube error response
 - [ ] Handle crawl results
 - [x] write results to file

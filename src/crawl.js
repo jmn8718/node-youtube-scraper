@@ -3,6 +3,7 @@ const uniq = require("lodash.uniq");
 const difference = require("lodash.difference");
 const { map } = require("bluebird");
 const { filterNewVideos } = require("./controllers/videos");
+const { getVideosData } = require("./controllers/youtube");
 const { saveToDisc } = require("./backup");
 const { defaultLimit, logsFolder, executionID } = require("./config");
 
@@ -100,6 +101,7 @@ const crawlChannels = async function(channels = [], concurrency = 2) {
       } else {
         saveToDisc(channelId, videoIds);
       }
+      const youtubeVideosData = await getVideosData(videoIds);
       return { _id, channelId, videoIds };
     },
     { concurrency }
