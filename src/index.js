@@ -6,7 +6,7 @@ const init = async function() {
   try {
     await connect();
 
-    const channelIds = await getChannelIds({ limit: 2 });
+    const channelIds = await getChannelIds({ limit: 25 });
     await crawlChannels(channelIds);
 
     await close();

@@ -19,7 +19,7 @@ The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to 
 ## TODO
 
 - [x] remove duplicated before check on db
-- [ ] Handle errors when page take more than 10s to load
+- [x] Handle errors when page take more than 10s to load
 - [ ] Query youtube API to get videos data
 - [ ] Handle crawl results
 - [x] write results to file

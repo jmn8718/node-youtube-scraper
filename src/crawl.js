@@ -4,6 +4,7 @@ const difference = require("lodash.difference");
 const { map } = require("bluebird");
 const { filterNewVideos } = require("./controllers/videos");
 const { saveToDisc } = require("./backup");
+const { defaultLimit, logsFolder, executionID } = require("./config");
 
 const timeout = seconds => {
   return new Promise(resolve => {
@@ -27,12 +28,14 @@ const loadMoreVideos = async function(page, waitFor = 2) {
   await timeout(waitFor);
 };
 
-const crawl = async function(channelId, limit = 100) {
+const crawl = async function(channelId, limit = defaultLimit, retry = true) {
   const browser = await puppeteer.launch();
   let videoIds = [];
+  let error = false;
+  let errorMessage = "";
+  const page = await browser.newPage();
+  page.setViewport({ width: 1280, height: 926 });
   try {
-    const page = await browser.newPage();
-    page.setViewport({ width: 1280, height: 926 });
     console.log("opened browser");
     await page.goto(`https://www.youtube.com/channel/${channelId}/videos`, {
       waitUntil: "networkidle2"
@@ -69,19 +72,34 @@ const crawl = async function(channelId, limit = 100) {
       }
     }
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    await page.screenshot({
+      path: `${logsFolder}/${executionID}_${channelId}.png`,
+      fullPage: true
+    });
+    if (retry) {
+      console.log("closing browser");
+      await browser.close();
+      return crawl(channelId, limit, false);
+    }
+    error = true;
+    errorMessage = err.message;
   }
   console.log("closing browser");
   await browser.close();
-  return videoIds;
+  return { videoIds, error, errorMessage };
 };
 
 const crawlChannels = async function(channels = [], concurrency = 2) {
   return map(
     channels,
     async ({ _id, channelId }) => {
-      const videoIds = await crawl(channelId);
-      saveToDisc(channelId, videoIds);
+      const { videoIds, error, errorMessage } = await crawl(channelId);
+      if (error) {
+        console.log(`error for channel ${channelId} => ${errorMessage}`);
+      } else {
+        saveToDisc(channelId, videoIds);
+      }
       return { _id, channelId, videoIds };
     },
     { concurrency }
