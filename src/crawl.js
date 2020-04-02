@@ -1,7 +1,9 @@
 const puppeteer = require("puppeteer");
 const uniq = require("lodash.uniq");
+const difference = require("lodash.difference");
 const { map } = require("bluebird");
 const { filterNewVideos } = require("./controllers/videos");
+const { saveToDisc } = require("./backup");
 
 const timeout = seconds => {
   return new Promise(resolve => {
@@ -45,12 +47,15 @@ const crawl = async function(channelId, limit = 100) {
         `${channelId} => Retrieved: ${links.length} - Current videos: ${videoIds.length} - limit: ${limit}`
       );
       if (links.length !== videoIds.length) {
-        const newVideos = await filterNewVideos(channelId, links);
-        videoIds = [...newVideos];
+        const newVideos = await filterNewVideos(
+          channelId,
+          difference(links, videoIds)
+        );
+        videoIds.push(...newVideos);
         console.log(
           `${channelId} ==> nonExistingVideos: ${newVideos.length} || links: ${links.length}`
         );
-        if (newVideos.length !== links.length) {
+        if (videoIds.length !== links.length) {
           search = false;
         }
       } else {
@@ -76,6 +81,7 @@ const crawlChannels = async function(channels = [], concurrency = 2) {
     channels,
     async ({ _id, channelId }) => {
       const videoIds = await crawl(channelId);
+      saveToDisc(channelId, videoIds);
       return { _id, channelId, videoIds };
     },
     { concurrency }

@@ -17,6 +17,7 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "dotenv": "^8.2.0",
+    "lodash.difference": "^4.5.0",
     "lodash.filter": "^4.6.0",
     "lodash.get": "^4.4.2",
     "lodash.uniq": "^4.5.0",
