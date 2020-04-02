@@ -1,3 +1,4 @@
+const { connect, close } = require("./db");
 const { crawl } = require("./crawl");
 
 const crawlChannel = async function(channelId) {
@@ -5,4 +6,12 @@ const crawlChannel = async function(channelId) {
   console.log(videoIds);
 };
 
-crawlChannel("UCQX_MZRCaluNKxkywkLEgfA");
+const init = async function() {
+  await connect();
+
+  crawlChannel("UCQX_MZRCaluNKxkywkLEgfA");
+
+  await close();
+};
+
+init();
