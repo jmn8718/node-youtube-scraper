@@ -7,9 +7,11 @@ const config = {
   logsFolder: join(__dirname, "..", "..", "logs"),
   mongoUrl: get(process.env, "MONGO_URL", "mongodb://localhost:27017"),
   dbName: get(process.env, "DB_NAME", "db"),
-  defaultLimit: get(process.env, "LIMIT_VIDEOS", 200),
+  defaultLimit: parseInt(get(process.env, "LIMIT_VIDEOS", 200)),
   youtubeAPIKey: get(process.env, "YOUTUBE_API_KEY", "youtubeapikey"),
-  youtubeMaxIdsSize: get(process.env, "YOUTUBE_MAX_IDS_SIZE", 50)
+  youtubeMaxIdsSize: parseInt(get(process.env, "YOUTUBE_MAX_IDS_SIZE", 50)),
+  apiEndpoint: get(process.env, "API_ENDPOINT", "apikey"),
+  apiToken: get(process.env, "API_TOKEN", "apitoken")
 };
 
 module.exports = config;
