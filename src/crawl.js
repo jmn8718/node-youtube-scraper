@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 const uniq = require("lodash.uniq");
+const { map } = require("bluebird");
+const { filterNewVideos } = require("./controllers/videos");
 
 const timeout = seconds => {
   return new Promise(resolve => {
@@ -15,7 +17,7 @@ const getVideoIds = async function(page) {
 };
 
 const loadMoreVideos = async function(page, waitFor = 2) {
-  console.log("load");
+  console.log("load more videos");
   await page.evaluate(() => {
     const element = document.getElementById("continuations");
     element.scrollIntoView();
@@ -40,20 +42,25 @@ const crawl = async function(channelId, limit = 100) {
     while (search) {
       const links = await getVideoIds(page);
       console.log(
-        `Retrieved: ${links.length} - Current videos: ${videoIds.length} - limit: ${limit}`
+        `${channelId} => Retrieved: ${links.length} - Current videos: ${videoIds.length} - limit: ${limit}`
       );
       if (links.length !== videoIds.length) {
-        videoIds = [...links];
+        const newVideos = await filterNewVideos(channelId, links);
+        videoIds = [...newVideos];
+        console.log(
+          `${channelId} ==> nonExistingVideos: ${newVideos.length} || links: ${links.length}`
+        );
+        if (newVideos.length !== links.length) {
+          search = false;
+        }
       } else {
-        console.log("y");
         search = false;
       }
       if (videoIds.length > limit) {
-        console.log("x");
         search = false;
       }
       if (search) {
-        await loadMoreVideos(page, 5)
+        await loadMoreVideos(page, 5);
       }
     }
   } catch (err) {
@@ -64,6 +71,18 @@ const crawl = async function(channelId, limit = 100) {
   return videoIds;
 };
 
+const crawlChannels = async function(channels = [], concurrency = 2) {
+  return map(
+    channels,
+    async ({ _id, channelId }) => {
+      const videoIds = await crawl(channelId);
+      return { _id, channelId, videoIds };
+    },
+    { concurrency }
+  );
+};
+
 module.exports = {
-  crawl
+  crawl,
+  crawlChannels
 };

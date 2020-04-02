@@ -1,15 +1,14 @@
 const { connect, close } = require("./db");
-const { crawl } = require("./crawl");
-
-const crawlChannel = async function(channelId) {
-  const videoIds = await crawl(channelId, 120);
-  console.log(videoIds);
-};
+const { crawlChannels } = require("./crawl");
+const { getChannelIds } = require("./controllers/users");
 
 const init = async function() {
   await connect();
 
-  crawlChannel("UCQX_MZRCaluNKxkywkLEgfA");
+  const channelIds = await getChannelIds({ limit: 2 });
+  const results = await crawlChannels(channelIds);
+  // TODO handle results 
+  console.log(results);
 
   await close();
 };
