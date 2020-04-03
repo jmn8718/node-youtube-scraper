@@ -1,4 +1,5 @@
 const { map } = require("bluebird");
+const get = require("lodash.get");
 const filter = require("lodash.filter");
 const { getDB } = require("../db");
 
@@ -23,7 +24,39 @@ const filterNewVideos = async function(channelId, videoIds = []) {
   return filter(results, { exists: false }).map(({ videoId }) => videoId);
 };
 
+const getVideoIds = async function(options) {
+  const db = await getDB();
+
+  const query = {
+    youtube: { $exists: true }
+  };
+  const channelId = get(options, "channelId");
+
+  if (channelId) {
+    query["youtube.channelId"] = channelId;
+  }
+
+  const videos = await db
+    .collection("videos")
+    .find(query, {
+      projection: {
+        "youtube.youtubeId": 1,
+        "youtube.channelId": 1
+      },
+      limit: get(options, "limit", 0),
+      skip: get(options, "skip", 0)
+    })
+    .toArray();
+
+  return videos.map(video => ({
+    _id: video._id,
+    channelId: get(video, "youtube.channelId", ""),
+    youtubeId: get(video, "youtube.youtubeId", "")
+  }));
+};
+
 module.exports = {
   checkVideoExists,
-  filterNewVideos
+  filterNewVideos,
+  getVideoIds
 };
