@@ -4,6 +4,22 @@ The goal of this project is to scrap youtube channel's page to get the latest vi
 
 The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to get the latest videos of a channel too.
 
+## TODO
+
+- [x] remove duplicated before check on db
+- [x] Handle errors when page take more than 10s to load
+- [X] Query youtube API to get videos data
+- [ ] Handle youtube error response
+- [x] Handle crawl results
+- [ ] Handle api error response
+- [x] write results to file
+- [ ] Generate report from execution
+- [x] Setup docker for DB testing purposes
+- [ ] Setup API for testing videos crawl
+- [ ] Setup API for user interaction
+- [ ] Setup web ui for executions
+- [ ] Save executions on DB
+
 ## Requirements
 
 - nodejs
@@ -43,18 +59,7 @@ On every execution, and _executionID_ is created with a timestamp. This is used 
 
 It creates a file with the name __channelId.txt_ that contains the ids of the videos that are not stored on the database and are used to send the API.
 
-## TODO
 
-- [x] remove duplicated before check on db
-- [x] Handle errors when page take more than 10s to load
-- [X] Query youtube API to get videos data
-- [ ] Handle youtube error response
-- [x] Handle crawl results
-- [ ] Handle api error response
-- [x] write results to file
-- [ ] Generate report from execution
-- [ ] Setup docker for DB and API for testing purposes
-- [ ] Save executions on DB
 
 ## docker-compose
 
@@ -66,10 +71,16 @@ We can use puppeter with [browserless](https://www.browserless.io/) in order to 
 
 The docker container of [browserless/chrome](https://github.com/browserless/chrome) allow us to run the execution inside the container, and also allows use to live debug on the browser.
 
+### Mongo
+
+We have access to a local instance of mongo on docker-compose, it will start and load some default data usefull for testing.
+
+Also we have access to a mongo web interface to access the database using [mongo-express](https://github.com/mongo-express/mongo-express).
 
 ## References
 
 - [browserless](https://www.browserless.io/)
 - [browserless/chrome repository](https://github.com/browserless/chrome)
 - [https://blog.logrocket.com/how-to-set-up-a-headless-chrome-node-js-server-in-docker/]
-
+- [Docker mongo](https://hub.docker.com/_/mongo)
+- [Docker mongo-express](https://hub.docker.com/_/mongo-express)

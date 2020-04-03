@@ -8,6 +8,30 @@ services:
     networks: 
       - youtube-scrapper
 
+  db:
+    image: "mongo:4.2.5-bionic"
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: db
+    volumes:
+      - db:/data/db
+      - ./init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - ./data/:/data
+    networks: 
+      - youtube-scrapper
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 4001:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db
+      ME_CONFIG_MONGODB_PORT: 27017
+    networks: 
+      - youtube-scrapper
+
 networks:
   youtube-scrapper:
 
+volumes:
+  db:
