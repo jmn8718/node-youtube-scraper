@@ -10,6 +10,7 @@ The [youtube API](https://developers.google.com/youtube/v3/docs) can be used to 
 - mongodb
 - youtube API key
 - API token
+- (_optional_) docker and docker-compose
 
 ## Database
 
@@ -53,3 +54,22 @@ It creates a file with the name __channelId.txt_ that contains the ids of the vi
 - [x] write results to file
 - [ ] Generate report from execution
 - [ ] Setup docker for DB and API for testing purposes
+- [ ] Save executions on DB
+
+## docker-compose
+
+We have configured docker-compose to setup the local environment to run the crawl with access to different services:
+
+### Browserless
+
+We can use puppeter with [browserless](https://www.browserless.io/) in order to automate and run the test without having installed the chrome driver on our local machine. Usefull for remote executions.
+
+The docker container of [browserless/chrome](https://github.com/browserless/chrome) allow us to run the execution inside the container, and also allows use to live debug on the browser.
+
+
+## References
+
+- [browserless](https://www.browserless.io/)
+- [browserless/chrome repository](https://github.com/browserless/chrome)
+- [https://blog.logrocket.com/how-to-set-up-a-headless-chrome-node-js-server-in-docker/]
+

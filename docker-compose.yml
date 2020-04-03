@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  browser:
+    image: "browserless/chrome:latest"
+    ports:
+      - 4000:3000
+    networks: 
+      - youtube-scrapper
+
+networks:
+  youtube-scrapper:
+

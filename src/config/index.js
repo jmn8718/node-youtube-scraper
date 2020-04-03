@@ -2,6 +2,12 @@ require("dotenv").config();
 const get = require("lodash.get");
 const { join } = require("path");
 
+const pupperterConfig = {};
+const browserWSEndpoint = get(process.env, "BROWSER_WS_ENDPOINT");
+if (browserWSEndpoint) {
+  pupperterConfig.browserWSEndpoint = browserWSEndpoint;
+}
+
 const config = {
   executionID: Date.now(),
   logsFolder: join(__dirname, "..", "..", "logs"),
@@ -11,7 +17,8 @@ const config = {
   youtubeAPIKey: get(process.env, "YOUTUBE_API_KEY", "youtubeapikey"),
   youtubeMaxIdsSize: parseInt(get(process.env, "YOUTUBE_MAX_IDS_SIZE", 50)),
   apiEndpoint: get(process.env, "API_ENDPOINT", "apikey"),
-  apiToken: get(process.env, "API_TOKEN", "apitoken")
+  apiToken: get(process.env, "API_TOKEN", "apitoken"),
+  pupperterConfig
 };
 
 module.exports = config;

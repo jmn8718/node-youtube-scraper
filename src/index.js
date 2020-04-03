@@ -1,5 +1,5 @@
 const { connect, close } = require("./db");
-const { crawlChannels } = require("./crawl");
+const { crawlChannels } = require("./crawl/channelVideos");
 const { getChannelIds } = require("./controllers/users");
 
 const init = async function() {

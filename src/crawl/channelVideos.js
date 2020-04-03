@@ -2,17 +2,13 @@ const puppeteer = require("puppeteer");
 const uniq = require("lodash.uniq");
 const difference = require("lodash.difference");
 const { map } = require("bluebird");
-const { filterNewVideos } = require("./controllers/videos");
-const { getVideosData } = require("./controllers/youtube");
-const { publishVideo } = require("./controllers/api");
-const { saveToDisc } = require("./backup");
-const { defaultLimit, logsFolder, executionID } = require("./config");
+const { filterNewVideos } = require("../controllers/videos");
+const { getVideosData } = require("../controllers/youtube");
+const { publishVideo } = require("../controllers/api");
+const { saveToDisc } = require("../backup");
+const { defaultLimit, logsFolder, executionID, puppeteerConfig } = require("../config");
+const { timeout } = require('./utils');
 
-const timeout = seconds => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(), seconds * 1000);
-  });
-};
 const getVideoIds = async function(page) {
   const videoIds = await page.evaluate(() => {
     const links = Array.from(document.querySelectorAll('a[href*="/watch"]'));
@@ -31,7 +27,7 @@ const loadMoreVideos = async function(page, waitFor = 2) {
 };
 
 const crawl = async function(channelId, limit = defaultLimit, retry = true) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch(puppeteerConfig);
   let videoIds = [];
   let error = false;
   let errorMessage = "";
