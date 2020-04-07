@@ -123,6 +123,7 @@ const crawlChannels = async function (channels = [], options = {}) {
         });
       } catch (err) {
         console.error(err);
+        executionError = err.message;
       }
       return { _id, channelId, videos, error: executionError };
     },

@@ -3,7 +3,7 @@ const { mongoUrl, dbName } = require('../config');
 
 // Create a new MongoClient
 const client = new MongoClient(mongoUrl, { useUnifiedTopology: true });
-let db;
+const dbs = {};
 
 const connect = () => {
   console.log('connecting to MONGO');
@@ -21,15 +21,15 @@ const close = () => {
   return client.close();
 };
 
-const getDB = async function () {
+const getDB = async function (name = dbName) {
   if (!client.isConnected()) {
     await connect();
   }
-  if (!db) {
-    console.log(`Connecting to DB ${dbName}`);
-    db = await client.db(dbName);
+  if (!dbs[name]) {
+    console.log(`Connecting to DB ${name}`);
+    dbs[name] = await client.db(name);
   }
-  return db;
+  return dbs[name];
 };
 
 module.exports = {

@@ -13,6 +13,7 @@ const config = {
   logsFolder: join(__dirname, '..', '..', 'logs'),
   mongoUrl: get(process.env, 'MONGO_URL', 'mongodb://localhost:27017'),
   dbName: get(process.env, 'DB_NAME', 'db'),
+  dbNameExecutions: get(process.env, 'DB_NAME_EXECUTIONS', 'db'),
   defaultLimit: parseInt(get(process.env, 'LIMIT_VIDEOS', 200)),
   youtubeAPIKey: get(process.env, 'YOUTUBE_API_KEY', 'youtubeapikey'),
   youtubeMaxIdsSize: parseInt(get(process.env, 'YOUTUBE_MAX_IDS_SIZE', 50)),
