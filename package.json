@@ -4,6 +4,10 @@
   "description": "The goal of this project is to scrap youtube channel's page to get the latest video ids of a channel.",
   "main": "src/index.js",
   "scripts": {
+    "pre:lint": "npm run prettier",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier \"**/*.js\" --write",
     "start": "node src/index.js"
   },
   "keywords": [
@@ -31,7 +35,12 @@
     "mongodb": "^3.5.5",
     "puppeteer": "^2.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "2.0.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jmn8718/node-youtube-scraper.git"

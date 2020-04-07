@@ -1,13 +1,13 @@
-const { getDB } = require("../db");
+const { getDB } = require('../db');
 
-const saveExecution = async function (executionId = "", results = []) {
+const saveExecution = async function (executionId = '', results = []) {
   if (results.length === 0) {
     // simulate mongo result
     return { result: { ok: 1, n: 0 } };
   }
   const db = await getDB();
 
-  const bulkResults = await db.collection("executions").bulkWrite(
+  const bulkResults = await db.collection('executions').bulkWrite(
     results.map(({ _id, channelId, videos = [], error = false }) => {
       return {
         insertOne: {
@@ -18,8 +18,8 @@ const saveExecution = async function (executionId = "", results = []) {
             channelDocumentId: _id,
             error,
             timestamp: Date.now()
-          },
-        },
+          }
+        }
       };
     })
   );
@@ -28,5 +28,5 @@ const saveExecution = async function (executionId = "", results = []) {
 };
 
 module.exports = {
-  saveExecution,
+  saveExecution
 };

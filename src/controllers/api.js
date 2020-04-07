@@ -1,12 +1,12 @@
-const axios = require("axios");
+const axios = require('axios');
 
-const { apiEndpoint, apiToken, apiHost } = require("../config");
+const { apiEndpoint, apiToken, apiHost } = require('../config');
 
 const VIDEOS_ENDPOINT = `${apiEndpoint}/videos/youtube`;
 
 const publishVideo = async function (videoData) {
   const response = await axios({
-    method: "POST",
+    method: 'POST',
     url: `${apiHost}${VIDEOS_ENDPOINT}`,
     data: videoData,
     headers: {

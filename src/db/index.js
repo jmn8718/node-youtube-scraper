@@ -1,12 +1,12 @@
-const { MongoClient } = require("mongodb");
-const { mongoUrl, dbName } = require("../config");
+const { MongoClient } = require('mongodb');
+const { mongoUrl, dbName } = require('../config');
 
 // Create a new MongoClient
 const client = new MongoClient(mongoUrl, { useUnifiedTopology: true });
 let db;
 
 const connect = () => {
-  console.log("connecting to MONGO");
+  console.log('connecting to MONGO');
   if (client.isConnected()) {
     return Promise.resolve();
   }
@@ -14,14 +14,14 @@ const connect = () => {
 };
 
 const close = () => {
-  console.log("close connection to MONGO");
+  console.log('close connection to MONGO');
   if (!client.isConnected()) {
     return Promise.resolve();
   }
   return client.close();
 };
 
-const getDB = async function() {
+const getDB = async function () {
   if (!client.isConnected()) {
     await connect();
   }
