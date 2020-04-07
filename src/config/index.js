@@ -16,9 +16,10 @@ const config = {
   defaultLimit: parseInt(get(process.env, "LIMIT_VIDEOS", 200)),
   youtubeAPIKey: get(process.env, "YOUTUBE_API_KEY", "youtubeapikey"),
   youtubeMaxIdsSize: parseInt(get(process.env, "YOUTUBE_MAX_IDS_SIZE", 50)),
+  apiHost: get(process.env, "API_HOST", "apikey"),
   apiEndpoint: get(process.env, "API_ENDPOINT", "apikey"),
   apiToken: get(process.env, "API_TOKEN", "apitoken"),
-  pupperterConfig
+  pupperterConfig,
 };
 
 module.exports = config;

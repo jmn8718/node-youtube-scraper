@@ -1,13 +1,13 @@
 const axios = require("axios");
 
-const { apiEndpoint, apiToken } = require("../config");
+const { apiEndpoint, apiToken, apiHost } = require("../config");
 
 const VIDEOS_ENDPOINT = `${apiEndpoint}/videos/youtube`;
 
-const publishVideo = async function(videoData) {
+const publishVideo = async function (videoData) {
   const response = await axios({
     method: "POST",
-    url: VIDEOS_ENDPOINT,
+    url: `${apiHost}${VIDEOS_ENDPOINT}`,
     data: videoData,
     headers: {
       Authorization: `Bearer ${apiToken}`
@@ -20,5 +20,6 @@ const publishVideo = async function(videoData) {
 };
 
 module.exports = {
-  publishVideo
+  publishVideo,
+  VIDEOS_ENDPOINT
 };
