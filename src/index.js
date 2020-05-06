@@ -2,6 +2,7 @@ const { argv } = require('yargs');
 const get = require('lodash.get');
 
 const { connect, close } = require('./db');
+const { checkFolders } = require('./backup');
 const { crawlChannels } = require('./crawl/channelVideos');
 const { crawlVideos } = require('./crawl/video');
 const { getChannelIds } = require('./controllers/users');
@@ -9,6 +10,7 @@ const { getVideoIds } = require('./controllers/videos');
 
 const init = async function (options = {}) {
   try {
+    checkFolders();
     await connect();
 
     // crawl channel to get videos
