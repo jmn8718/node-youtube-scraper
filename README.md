@@ -51,6 +51,14 @@ The data retrieved from youtube is send to an API with some information to add t
 2. create `.env` file and set the values. You can use the `.env.example`.
 3. run `npm start`
 
+### Execute for specific youtube channel ids
+
+If you want to run against some specific channels, you can execute
+
+`node src/index --youtubeIds=X,Y,..`
+
+where _youtubeIds_ is a string that contains the youtube channel ids, separated by **,**
+
 ## Logs
 
 The projects stores the results on the folder __logs__ at the root of the project.
