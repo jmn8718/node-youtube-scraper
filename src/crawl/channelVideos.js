@@ -103,7 +103,7 @@ const crawlChannels = async function (channels = [], options = {}) {
   const { concurrency = 2, execution = executionID } = options;
   const results = await map(
     channels,
-    async ({ _id, channelId }) => {
+    async ({ _id, channelId, language }) => {
       const videos = [];
       let executionError = '';
       try {
@@ -118,7 +118,7 @@ const crawlChannels = async function (channels = [], options = {}) {
           videos.push(...videoIds);
         }
         const youtubeVideosData = await getVideosData(videoIds);
-        await map(youtubeVideosData, publishVideo, {
+        await map(youtubeVideosData, publishVideo(_id, language), {
           concurrency: 4
         });
       } catch (err) {

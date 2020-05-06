@@ -19,7 +19,8 @@ const getChannelIds = async function (options = {}) {
     .collection('users')
     .find(query, {
       projection: {
-        'youtube.channelId': 1
+        'youtube.channelId': 1,
+        languageToTeach: 1
       },
       limit: get(options, 'limit', 0),
       skip: get(options, 'skip', 0)
@@ -28,7 +29,8 @@ const getChannelIds = async function (options = {}) {
 
   return users.map((user) => ({
     _id: user._id,
-    channelId: get(user, 'youtube.channelId', '')
+    channelId: get(user, 'youtube.channelId', ''),
+    language: get(user, 'languageToTeach', '')
   }));
 };
 
