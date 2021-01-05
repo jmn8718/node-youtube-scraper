@@ -19,7 +19,7 @@
   "author": "Jose Miguel Navarro <jmn8718@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "dotenv": "^8.2.0",
     "lodash.chunk": "^4.2.0",
